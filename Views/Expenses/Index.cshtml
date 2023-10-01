@@ -1,0 +1,35 @@
+    <div class="container mt-4">
+        <h1>Le tue spese</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Descrizione</th>
+                    <th>Soldi</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Esempio di una riga di dati nella tabella -->
+                <tr>
+                    <td>01/09/2023</td>
+                    <td>Acquisto generico</td>
+                    <td>50.00€</td>s
+                    <td>
+                        <!-- Icona dei tre puntini per le azioni -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary" type="button" id="AltreAzioni" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="AltreAzioni">
+                                <!-- Esempio di azioni -->
+                                <a class="dropdown-item" href="#">Modifica</a>
+                                <a class="dropdown-item" href="#">Elimina</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Puoi aggiungere più righe di dati qui -->
+            </tbody>
+        </table>
+    </div>
