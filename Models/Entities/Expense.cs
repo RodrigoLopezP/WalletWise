@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using WalletWise.Models.ValueObjects;
 
 namespace WalletWise.Models.Entities;
 
 public partial class Expense
 {
-    public required int ExpenId { get; set; }
+    public int ExpenId { get; set; }
 
     public string ExpenUserId { get; set; }
+    public Money Amount { get; set; }
 
-    public required decimal ExpenTotalAmount { get; set; }
+    // public decimal ExpenTotalAmount { get; set; }
 
-    public required string ExpenCurrency { get; set; }
+    // public string ExpenCurrency { get; set; }
 
-    public string? ExpenName { get; set; }
+    public string ExpenName { get; set; }
 
-    public required DateTime ExpenDate { get; set; }
+    public DateTime ExpenDate { get; set; }
 
     public int? ExpenTag1 { get; set; }
 
@@ -29,5 +31,15 @@ public partial class Expense
 
     public string ExpenLocation { get; set; }
 
-    public virtual Tag Tag { get; set; }
+    public virtual Tag ExpenTag1Navigation { get; set; }
+
+    public virtual Tag ExpenTag2Navigation { get; set; }
+
+    public virtual Tag ExpenTag3Navigation { get; set; }
+
+    public virtual Tag ExpenTag4Navigation { get; set; }
+
+    public virtual Tag ExpenTag5Navigation { get; set; }
+
+    public virtual ICollection<ExpenseDetail> ExpenseDetails { get; set; } = new List<ExpenseDetail>();
 }
