@@ -1,4 +1,5 @@
 bin
 obj
 database-scripts
-wwwroot\lib\fontawesome-6.4.2-web
+ignored-folder
+wwwroot\lib
