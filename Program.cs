@@ -16,7 +16,7 @@ services.AddTransient<IExpenseService, EfExpenseService>();
 services.AddDbContextPool<DbContextWalletWise>(x =>
 {
     //  string connectionString = configuration.GetSection("ConnectionStrings").GetValue<string>("DefaultConnection");
-     string connectionString = configuration.GetConnectionString("DefaultConnection");
+     string? connectionString = configuration.GetConnectionString("DefaultConnection");
      x.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 // Add services to the container.

@@ -28,7 +28,7 @@ namespace WalletWise.Models.Services.Application
                                     Id = x.ExpenId,
                                     IdUser = x.ExpenUserId,
                                     Date = DateOnly.FromDateTime(x.ExpenDate),
-                                    Amount = x.ExpenTotalAmount,
+                                    Amount = x.Amount,
                                     Name=x.ExpenName,
                                     Location=x.ExpenLocation                                    
                                })

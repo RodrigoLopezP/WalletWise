@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using WalletWise.Models.Entities;
+using WalletWise.Models.Enums;
+using WalletWise.Models.ValueObjects;
 
 namespace WalletWise.Models.Services.Infrastructure;
 
@@ -18,29 +21,61 @@ public partial class DbContextWalletWise : DbContext
 
     public virtual DbSet<Expense> Expenses { get; set; }
 
+    public virtual DbSet<ExpenseDetail> ExpenseDetails { get; set; }
+
     public virtual DbSet<Tag> Tags { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
     }
-
+     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+     {
+          configurationBuilder.Properties<Currency>().HaveConversion<string>();
+     }
+ 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder); // https://stackoverflow.com/questions/39576176/is-base-onmodelcreatingmodelbuilder-necessary (no)
+
+        modelBuilder.Owned<Money>();
+
         modelBuilder
             .UseCollation("utf8mb4_0900_bin")
             .HasCharSet("utf8mb4");
-
-        modelBuilder.Entity<Expense>(entity =>
-        {
+          #region TABLE EXPENSES
+          modelBuilder.Entity<Expense>(entity =>{
             entity.HasKey(e => e.ExpenId).HasName("PRIMARY");
 
             entity.ToTable("expenses");
-            //PK Expense
-            entity.Property(e => e.ExpenId)
-                .HasColumnName("expen_ID");
-            entity.Property(e => e.ExpenCurrency)
-                .IsRequired()
-                .HasMaxLength(10)
-                .HasColumnName("expen_currency");
+
+            entity.HasIndex(e => e.ExpenTag1, "FK_tags_expenses1");
+
+            entity.HasIndex(e => e.ExpenTag2, "FK_tags_expenses2");
+
+            entity.HasIndex(e => e.ExpenTag3, "FK_tags_expenses3");
+
+            entity.HasIndex(e => e.ExpenTag4, "FK_tags_expenses4");
+
+            entity.HasIndex(e => e.ExpenTag5, "FK_tags_expenses5");
+
+            entity.Property(e => e.ExpenId).HasColumnName("expen_id");
+
+               // entity.Property(e => e.ExpenCurrency)
+               //     .IsRequired()
+               //     .HasMaxLength(10)
+               //     .HasColumnName("expen_currency");
+               // entity.Property(e => e.ExpenTotalAmount)
+               //     .HasPrecision(7, 2)
+               //     .HasColumnName("expen_total_amount");
+               entity.OwnsOne(x => x.Amount, builder =>
+               {
+                    builder.Property(money => money.Amount)
+                    .HasColumnName("expen_total_amount")
+                    .HasPrecision(7, 2);
+                    builder.Property(money => money.Currency)
+                    .HasColumnName("expen_currency")
+                    .HasMaxLength(10)
+                    .IsRequired();
+               });
             entity.Property(e => e.ExpenDate)
                 .HasColumnType("datetime")
                 .HasColumnName("expen_date");
@@ -55,23 +90,71 @@ public partial class DbContextWalletWise : DbContext
             entity.Property(e => e.ExpenTag3).HasColumnName("expen_tag3");
             entity.Property(e => e.ExpenTag4).HasColumnName("expen_tag4");
             entity.Property(e => e.ExpenTag5).HasColumnName("expen_tag5");
-            entity.Property(e => e.ExpenTotalAmount)
-                .HasPrecision(7, 2)
-                .HasColumnName("expen_total_amount");
+          
             entity.Property(e => e.ExpenUserId)
                 .HasColumnType("text")
-                .HasColumnName("expen_user_ID");
+                .HasColumnName("expen_user_id");
+
+            entity.HasOne(d => d.ExpenTag1Navigation).WithMany(p => p.ExpenseExpenTag1Navigations)
+                .HasForeignKey(d => d.ExpenTag1)
+                .HasConstraintName("FK_tags_expenses1");
+
+            entity.HasOne(d => d.ExpenTag2Navigation).WithMany(p => p.ExpenseExpenTag2Navigations)
+                .HasForeignKey(d => d.ExpenTag2)
+                .HasConstraintName("FK_tags_expenses2");
+
+            entity.HasOne(d => d.ExpenTag3Navigation).WithMany(p => p.ExpenseExpenTag3Navigations)
+                .HasForeignKey(d => d.ExpenTag3)
+                .HasConstraintName("FK_tags_expenses3");
+
+            entity.HasOne(d => d.ExpenTag4Navigation).WithMany(p => p.ExpenseExpenTag4Navigations)
+                .HasForeignKey(d => d.ExpenTag4)
+                .HasConstraintName("FK_tags_expenses4");
+
+            entity.HasOne(d => d.ExpenTag5Navigation).WithMany(p => p.ExpenseExpenTag5Navigations)
+                .HasForeignKey(d => d.ExpenTag5)
+                .HasConstraintName("FK_tags_expenses5");
+        });
+          #endregion
+
+        #region TABLE EXPENSE_DETAILS
+          modelBuilder.Entity<ExpenseDetail>(entity =>
+        {
+             entity.HasKey(e => e.ExdetId).HasName("PRIMARY");
+
+             entity.ToTable("expense_details");
+
+             entity.HasIndex(e => e.ExdetExpenId, "FK_expenses_expense_details");
+
+             entity.Property(e => e.ExdetId).HasColumnName("exdet_id");
+             entity.Property(e => e.ExdetAmount)
+                 .HasPrecision(7, 2)
+                 .HasColumnName("exdet_amount");
+             entity.Property(e => e.ExdetCurrency)
+                 .IsRequired()
+                 .HasMaxLength(10)
+                 .HasColumnName("exdet_currency");
+             entity.Property(e => e.ExdetExpenId).HasColumnName("exdet_expen_id");
+             entity.Property(e => e.ExdetName)
+                 .HasMaxLength(100)
+                 .HasColumnName("exdet_name");
+
+             entity.HasOne(d => d.ExdetExpen).WithMany(p => p.ExpenseDetails)
+                 .HasForeignKey(d => d.ExdetExpenId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_expenses_expense_details");
         });
 
-        modelBuilder.Entity<Tag>(entity =>
+          #endregion
+
+        #region TABLE TAGS
+          modelBuilder.Entity<Tag>(entity =>
         {
             entity.HasKey(e => e.TagId).HasName("PRIMARY");
 
             entity.ToTable("tags");
 
-            entity.Property(e => e.TagId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("tag_id");
+            entity.Property(e => e.TagId).HasColumnName("tag_id");
             entity.Property(e => e.TagDescription)
                 .HasMaxLength(500)
                 .HasColumnName("tag_description");
@@ -82,13 +165,10 @@ public partial class DbContextWalletWise : DbContext
             entity.Property(e => e.TagUserId)
                 .HasColumnType("text")
                 .HasColumnName("tag_user_id");
-
-            entity.HasOne(d => d.TagNavigation).WithOne(p => p.Tag)
-                .HasForeignKey<Tag>(d => d.TagId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_tags_expenses1");
         });
 
+        #endregion
+        
         OnModelCreatingPartial(modelBuilder);
     }
 

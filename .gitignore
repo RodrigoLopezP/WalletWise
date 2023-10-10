@@ -2,4 +2,4 @@ bin
 obj
 database-scripts
 ignored-folder
-wwwroot\lib
+wwwroot/lib

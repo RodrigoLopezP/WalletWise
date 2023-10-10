@@ -38,7 +38,7 @@ namespace WalletWise.Models.ValueObjects
 
           public override string ToString()
           {
-               return $"{Currency} {Amount:#.00}";
+               return $"{Amount:#.00} {Currency}";
           }
      }
 }
