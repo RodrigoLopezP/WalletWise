@@ -9,11 +9,11 @@ public partial class Tag
 
     public string TagUserId { get; set; }
 
-    public required string TagName { get; set; }
+    public string TagName { get; set; }
 
     public string? TagDescription { get; set; }
 
-    public bool? TagIsPublic { get; set; }
+    public bool TagIsPublic { get; set; }
 
     public virtual Expense TagNavigation { get; set; }
 }

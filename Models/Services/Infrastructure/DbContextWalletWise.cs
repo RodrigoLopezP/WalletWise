@@ -20,9 +20,8 @@ public partial class DbContextWalletWise : DbContext
 
     public virtual DbSet<Tag> Tags { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;port=3306;database=WalletWise;uid=root;pwd=FigoFigata123", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.34-mysql"));
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -36,7 +35,8 @@ public partial class DbContextWalletWise : DbContext
 
             entity.ToTable("expenses");
             //PK Expense
-            entity.Property(e => e.ExpenId).HasColumnName("expen_ID");
+            entity.Property(e => e.ExpenId)
+                .HasColumnName("expen_ID");
             entity.Property(e => e.ExpenCurrency)
                 .IsRequired()
                 .HasMaxLength(10)

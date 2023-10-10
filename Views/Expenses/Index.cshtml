@@ -1,20 +1,44 @@
+@model List<ExpenseListViewModel> 
+    
     <div class="container mt-4">
         <h1>Le tue spese</h1>
         <table class="table">
             <thead>
                 <tr>
                     <th>Data</th>
-                    <th>Descrizione</th>
+                    <th>Nome</th>
                     <th>Soldi</th>
                     <th>Azioni</th>
                 </tr>
             </thead>
+
             <tbody>
-                <!-- Esempio di una riga di dati nella tabella -->
+                @foreach (var item in Model)
+                {
+                    <tr>
+                    <td>@item.Date</td>
+                    <td>@item.Name</td>
+                    <td>@item.Amount</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown button
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                    </tr>
+                }
+                @* <!-- Esempio di una riga di dati nella tabella -->
                 <tr>
                     <td>01/09/2023</td>
                     <td>Acquisto generico</td>
-                    <td>50.00€</td>s
+                    <td>50.00€</td>
                     <td>
                         <!-- Icona dei tre puntini per le azioni -->
                         <div class="dropdown">
@@ -27,9 +51,20 @@
                                 <a class="dropdown-item" href="#">Elimina</a>
                             </div>
                         </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown button
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
                     </td>
                 </tr>
-                <!-- Puoi aggiungere più righe di dati qui -->
+                <!-- Puoi aggiungere più righe di dati qui --> *@
             </tbody>
         </table>
     </div>
