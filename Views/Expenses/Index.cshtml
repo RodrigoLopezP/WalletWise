@@ -1,74 +1,63 @@
-@model List<ExpenseListViewModel> 
-    
-    <div class="container mt-4">
-        <h1>Le tue spese</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Nome</th>
-                    <th>Soldi</th>
-                    <th>Azioni</th>
-                </tr>
-            </thead>
+@model List<ExpenseListViewModel>
 
-            <tbody>
-                @foreach (var item in Model)
-                {
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <section>
+                <h3>Riassunto mensile</h3>
+                <br>
+                <i> Spesa mensile da <br>2023-10-01 a 2023-10-30 </i>
+            </section>
+            <br>
+            <section>
+                <b>300,00 EUR</b>
+            </section>
+        </div>
+        <div class="col-md-9">
+            <h1>Le tue spese</h1>
+            <table class="table table-hover table-sm align-middle">
+                <br>
+                <thead class=" table-light">
                     <tr>
-                    <td>@item.Date</td>
-                    <td>@item.Name</td>
-                    <td>@item.Amount</td>
-                    <td>
-                        <div class="dropdown">
-                            @* <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        <th>Data</th>
+                        <th>Nome</th>
+                        <th>Soldi</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@item.Name</td>
+                            <td>@item.Amount.Amount</td>
+                            <td>
+                                <div class="dropdown">
+                                    @* <button class="btn btn-secondary dropdown-toggle" type="button"
+                                id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Dropdown button
-                            </button> *@
-                            <button class="btn btn-primary" type="button" id="dropDownDetail"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                           <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropDownDetail">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                    </tr>
-                }
-                @* <!-- Esempio di una riga di dati nella tabella -->
-                <tr>
-                    <td>01/09/2023</td>
-                    <td>Acquisto generico</td>
-                    <td>50.00€</td>
-                    <td>
-                        <!-- Icona dei tre puntini per le azioni -->
-                        <div class="dropdown">
-                            <button class="btn btn-secondary" type="button" id="AltreAzioni" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="AltreAzioni">
-                                <!-- Esempio di azioni -->
-                                <a class="dropdown-item" href="#">Modifica</a>
-                                <a class="dropdown-item" href="#">Elimina</a>
-                            </div>
-                        </div>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown button
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                    </td>
-                </tr>
-                <!-- Puoi aggiungere più righe di dati qui --> *@
-            </tbody>
-        </table>
+                                </button> *@
+                                    <button class="btn btn-outline-primary btn-sm" type="button" id="dropDownDetail"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropDownDetail">
+                                        <li><a class="dropdown-item" href="#">Dettagli</a></li>
+                                        <li><a class="dropdown-item" href="#">Modifica</a></li>
+                                         <div class="dropdown-divider"></div>
+                                        <li><a class="dropdown-item" href="#">Elimina</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
     </div>
+
+</div>
