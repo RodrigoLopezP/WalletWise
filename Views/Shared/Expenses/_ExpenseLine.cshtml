@@ -1,0 +1,20 @@
+@model ExpenseViewModel
+  <tr>
+                            <td>@Model.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@Model.Name</td>
+                            <td>@Model.Amount.Amount</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-primary btn-sm" type="button" id="dropDownDetail"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropDownDetail">
+                                        <li><a class="dropdown-item" href="#">Dettagli</a></li>
+                                        <li><a class="dropdown-item" href="#">Modifica</a></li>
+                                         <div class="dropdown-divider"></div>
+                                        <li><a class="dropdown-item" href="#">Elimina</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
