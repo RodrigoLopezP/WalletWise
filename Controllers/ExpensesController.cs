@@ -27,7 +27,7 @@ namespace WalletWise.Controllers
         {
             string userId="anon";
             // _logger.LogDebug("Getting expenses list  of {userId}...",userId);
-            List<ExpenseListViewModel> viewModel = await _expenseService.GetExpensesAsync(userId);
+            List<ExpenseViewModel> viewModel = await _expenseService.GetExpensesAsync(userId);
 
             return View(viewModel);
         }

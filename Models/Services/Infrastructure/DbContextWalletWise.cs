@@ -90,7 +90,9 @@ public partial class DbContextWalletWise : DbContext
             entity.Property(e => e.ExpenTag3).HasColumnName("expen_tag3");
             entity.Property(e => e.ExpenTag4).HasColumnName("expen_tag4");
             entity.Property(e => e.ExpenTag5).HasColumnName("expen_tag5");
-          
+            entity.Property(e => e.ExpenModTimestamp)
+                .HasColumnType("datetime")
+                .HasColumnName("expen_mod_timestamp");
             entity.Property(e => e.ExpenUserId)
                 .HasColumnType("text")
                 .HasColumnName("expen_user_id");
@@ -138,7 +140,9 @@ public partial class DbContextWalletWise : DbContext
              entity.Property(e => e.ExdetName)
                  .HasMaxLength(100)
                  .HasColumnName("exdet_name");
-
+            entity.Property(e => e.ExdetModTimestamp)
+                .HasColumnType("datetime")
+                .HasColumnName("exdet_mod_timestamp");
              entity.HasOne(d => d.ExdetExpen).WithMany(p => p.ExpenseDetails)
                  .HasForeignKey(d => d.ExdetExpenId)
                  .OnDelete(DeleteBehavior.ClientSetNull)
@@ -158,7 +162,9 @@ public partial class DbContextWalletWise : DbContext
             entity.Property(e => e.TagDescription)
                 .HasMaxLength(500)
                 .HasColumnName("tag_description");
-            entity.Property(e => e.TagIsPublic).HasColumnName("tag_is_public");
+                        entity.Property(e => e.TagModTimestamp)
+                .HasColumnType("datetime")
+                .HasColumnName("tag_mod_timestamp");
             entity.Property(e => e.TagName)
                 .HasMaxLength(100)
                 .HasColumnName("tag_name");

@@ -12,8 +12,7 @@ public partial class Tag
     public string TagName { get; set; }
 
     public string TagDescription { get; set; }
-
-    public bool? TagIsPublic { get; set; }
+    public DateTime TagModTimestamp { get; set; }
 
     public virtual ICollection<Expense> ExpenseExpenTag1Navigations { get; set; } = new List<Expense>();
 

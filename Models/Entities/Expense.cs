@@ -30,6 +30,7 @@ public partial class Expense
     public int? ExpenTag5 { get; set; }
 
     public string ExpenLocation { get; set; }
+    public DateTime ExpenModTimestamp { get; set; }
 
     public virtual Tag ExpenTag1Navigation { get; set; }
 

@@ -18,4 +18,5 @@ public partial class ExpenseDetail
     public string ExdetCurrency { get; set; }
 
     public virtual Expense ExdetExpen { get; set; }
+    public DateTime ExdetModTimestamp { get; set; }
 }

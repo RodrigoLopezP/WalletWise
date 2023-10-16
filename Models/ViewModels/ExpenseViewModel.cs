@@ -8,7 +8,7 @@ using WalletWise.Models.ValueObjects;
 
 namespace WalletWise.Models.ViewModels
 {
-    public class ExpenseListViewModel
+    public class ExpenseViewModel
     {
         public int Id { get; set; }
         public required string IdUser { get; set; }
@@ -18,5 +18,6 @@ namespace WalletWise.Models.ViewModels
         public string? Name { get; set; }
         public string Location { get; set; }
         // public List<TagsViewModel> Tags { get; set; }
+        
     }
 }

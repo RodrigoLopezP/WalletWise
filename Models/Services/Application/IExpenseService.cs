@@ -8,6 +8,6 @@ namespace WalletWise.Models.Services.Application
 {
     public interface IExpenseService
     {
-        Task <List<ExpenseListViewModel>> GetExpensesAsync(string userId);
+        Task <List<ExpenseViewModel>> GetExpensesAsync(string userId);
     }
 }
