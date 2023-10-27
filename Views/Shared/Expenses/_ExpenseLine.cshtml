@@ -1,20 +1,79 @@
 @model ExpenseViewModel
-  <tr>
-                            <td>@Model.Date.ToString("yyyy-MM-dd")</td>
-                            <td>@Model.Name</td>
-                            <td>@Model.Amount.Amount</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-outline-primary btn-sm" type="button" id="dropDownDetail"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropDownDetail">
-                                        <li><a class="dropdown-item" href="#">Dettagli</a></li>
-                                        <li><a class="dropdown-item" href="#">Modifica</a></li>
-                                         <div class="dropdown-divider"></div>
-                                        <li><a class="dropdown-item" href="#">Elimina</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
+<tr>
+    <td>@Model.Date.ToString("yyyy-MM-dd")</td>
+    <td>@Model.Name</td>
+    <td>@Model.Amount.Amount</td>
+    <td>
+        <div class="dropdown">
+            <button class="btn btn-outline-primary btn-sm" type="button" id="dropDownDetail" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropDownDetail">
+                <li>
+                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalExpenseDetail">Dettagli</button>
+                </li>
+                <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalExpenseEdit">Modifica</button></li>
+                <div class="dropdown-divider"></div>
+                <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ModalExpenseDelete">Elimina</button></li>
+            </ul>
+        </div>
+    </td>
+</tr>
+
+<!-- Modal Details -->
+<div class="modal fade" id="ModalExpenseDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Dettagli</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="ModalExpenseEdit" tabindex="-1" aria-labelledby="ModelEditLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModelEditLabel">Modifica</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="ModalExpenseDelete" tabindex="-1" aria-labelledby="ModelEditLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModelEditLabel">Elimina</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
