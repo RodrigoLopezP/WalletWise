@@ -34,10 +34,11 @@ namespace WalletWise.Controllers
             return View(viewModel);
         }
 
-        [HttpPost(nameof(Add))]
-        public async Task<IActionResult> Add(ExpenseInputModel inputModel)
+        [HttpPost]
+        public async Task<IActionResult> Add(ExpenseListViewModel inputModel)
         {
-            return View(nameof(Index));
+            await _expenseService.AddExpenseAsync(inputModel.NewExpense);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

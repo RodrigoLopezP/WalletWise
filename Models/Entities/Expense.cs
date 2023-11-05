@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata;
 using WalletWise.Models.ValueObjects;
+using WalletWise.Models.ViewModels;
 
 namespace WalletWise.Models.Entities;
 
@@ -43,4 +45,17 @@ public partial class Expense
     public virtual Tag ExpenTag5Navigation { get; set; }
 
     public virtual ICollection<ExpenseDetail> ExpenseDetails { get; set; } = new List<ExpenseDetail>();
+
+    public ExpenseViewModel FromEntity(Expense entity)
+    {
+        return new ExpenseViewModel()
+        {
+            Id = entity.ExpenId,
+            IdUser = entity.ExpenUserId,
+            Date =entity.ExpenDate,
+            Amount = entity.Amount,
+            Name = entity.ExpenName,
+            Location = entity.ExpenLocation,
+        };
+    }
 }

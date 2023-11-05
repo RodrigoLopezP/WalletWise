@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using WalletWise.Models.Entities;
@@ -29,9 +30,10 @@ public partial class DbContextWalletWise : DbContext
     }
      protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
      {
-          configurationBuilder.Properties<Currency>().HaveConversion<string>();
-     }
- 
+        base.ConfigureConventions(configurationBuilder);
+        configurationBuilder.Properties<Currency>().HaveConversion<string>();
+    }
+  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder); // https://stackoverflow.com/questions/39576176/is-base-onmodelcreatingmodelbuilder-necessary (no)
@@ -77,7 +79,7 @@ public partial class DbContextWalletWise : DbContext
                     .IsRequired();
                });
             entity.Property(e => e.ExpenDate)
-                .HasColumnType("datetime")
+                .HasColumnType("date")
                 .HasColumnName("expen_date");
             entity.Property(e => e.ExpenLocation)
                 .HasMaxLength(100)

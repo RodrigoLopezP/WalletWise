@@ -20,10 +20,10 @@ namespace WalletWise.Models.InputModels
 
         [Required(ErrorMessage = "La valuta è richiesta"),
         Display(Name = "Valuta")]
-        public required string Currency { get; set; }
+        public string? Currency { get; set; }//TO DO: levare il nullable e renderlo obbligatorio
 
         [Display(Name = "Data")]
-        public DateOnly? Date { get; set; }
+        public DateTime Date { get; set; }
 
         [Display(Name = "Luogo")]
         public string? Location { get; set; }

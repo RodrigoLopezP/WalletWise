@@ -12,7 +12,7 @@ namespace WalletWise.Models.ViewModels
     {
         public int Id { get; set; }
         public required string IdUser { get; set; }
-        public DateOnly Date { get; set; } 
+        public DateTime Date { get; set; } 
         public Money Amount { get; set; }
         // public decimal Amount  { get; set; }
         public string? Name { get; set; }

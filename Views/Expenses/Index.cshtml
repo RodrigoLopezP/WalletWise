@@ -56,7 +56,7 @@
                     <div class="row mb-3 align-items-center">
                         <label asp-for="NewExpense.Name" for="colFormLabel" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
-                            <input asp-for="NewExpense.Name" type="email" class="form-control">
+                            <input asp-for="NewExpense.Name" class="form-control">
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
@@ -68,19 +68,18 @@
                         <div class="col-sm-1"></div>
                         <label asp-for="NewExpense.Currency" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-3">
-                            <select asp-for="NewExpense.Currency" type="email" class="form-control" id="colFormLabel"
-                                placeholder="EUR"></select>
+                            <select asp-for="NewExpense.Currency" class="form-control" placeholder="EUR"></select>
                         </div>
                         <div class="col-sm-1"></div>
                     </div>
                     <div class="row mb-3 align-items-center">
                         <label asp-for="NewExpense.Date" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-4">
-                            <input asp-for="NewExpense.Date" type="date" class="form-control" id="colFormLabel">
+                            <input asp-for="NewExpense.Date" type="date" class="form-control">
                         </div>
                         <label asp-for="NewExpense.Location" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-4">
-                            <input asp-for="NewExpense.Location" class="form-control" id="colFormLabel">
+                            <input asp-for="NewExpense.Location" class="form-control">
                         </div>
                     </div>
                 </div>
