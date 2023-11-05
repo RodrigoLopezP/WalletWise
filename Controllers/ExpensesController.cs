@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WalletWise.Models.InputModels;
 using WalletWise.Models.Services.Application;
 using WalletWise.Models.ViewModels;
 
@@ -27,9 +28,16 @@ namespace WalletWise.Controllers
         {
             string userId="anon";
             // _logger.LogDebug("Getting expenses list  of {userId}...",userId);
-            List<ExpenseViewModel> viewModel = await _expenseService.GetExpensesAsync(userId);
-
+            ExpenseListViewModel viewModel= new (){
+                ExpenseList=await _expenseService.GetExpensesAsync(userId)
+            };
             return View(viewModel);
+        }
+
+        [HttpPost(nameof(Add))]
+        public async Task<IActionResult> Add(ExpenseInputModel inputModel)
+        {
+            return View(nameof(Index));
         }
     }
 }

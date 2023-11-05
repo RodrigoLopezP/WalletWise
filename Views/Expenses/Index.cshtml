@@ -1,4 +1,4 @@
-@model List<ExpenseViewModel>
+@model ExpenseListViewModel
 
 <div class="container mt-4">
     <div class="row">
@@ -33,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.ExpenseList)
                     {
                         <partial name="Expenses/_ExpenseLine" model="@item"></partial>
                     }
@@ -47,46 +47,48 @@
 <div class="modal fade" id="ModalNewExpense" tabindex="-1" aria-labelledby="NewExpenseLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="NewExpenseLabel">Aggiungi nuova spesa</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="form-inline">
+            <form class="form-inline" method="post" asp-action="Add">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="NewExpenseLabel">Aggiungi nuova spesa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <div class="row mb-3 align-items-center">
-                        <label for="colFormLabel" class="col-sm-2 col-form-label">Nome</label>
+                        <label asp-for="NewExpense.Name" for="colFormLabel" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="colFormLabel" placeholder="La nuova mia spesa">
+                            <input asp-for="NewExpense.Name" type="email" class="form-control">
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="colFormLabel" class="col-sm-2 col-form-label">Prezzo</label>
+                        <label asp-for="NewExpense.Amount" for="colFormLabel" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-3">
-                            <input type="number" step="0.01" min="1" class="form-control" id="colFormLabel" placeholder="0.00">
+                            <input asp-for="NewExpense.Amount" type="number" step="0.01" min="1" class="form-control"
+                                placeholder="00.00">
                         </div>
                         <div class="col-sm-1"></div>
-                        <label for="colFormLabel" class="col-sm-2 col-form-label">Valuta</label>
+                        <label asp-for="NewExpense.Currency" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-3">
-                            <select type="email" class="form-control" id="colFormLabel" placeholder="EUR"></select>
+                            <select asp-for="NewExpense.Currency" type="email" class="form-control" id="colFormLabel"
+                                placeholder="EUR"></select>
                         </div>
                         <div class="col-sm-1"></div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label for="colFormLabel" class="col-sm-2 col-form-label">Data</label>
+                        <label asp-for="NewExpense.Date" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-4">
-                            <input type="date" class="form-control" id="colFormLabel">
+                            <input asp-for="NewExpense.Date" type="date" class="form-control" id="colFormLabel">
                         </div>
-                        <label for="colFormLabel" class="col-sm-2 col-form-label">Luogo</label>
+                        <label asp-for="NewExpense.Location" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-4">
-                            <input type="email" class="form-control" id="colFormLabel">
+                            <input asp-for="NewExpense.Location" class="form-control" id="colFormLabel">
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                <button type="button" class="btn btn-primary">Salva</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="submit" class="btn btn-primary">Salva</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
