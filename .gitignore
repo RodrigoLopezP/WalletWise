@@ -3,3 +3,4 @@ obj
 database-scripts
 ignored-folder
 wwwroot/lib
+.vscode/settings.json
