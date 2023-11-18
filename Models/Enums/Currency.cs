@@ -1,9 +1,9 @@
-namespace WalletWise.Models.Enums
-{
-    public enum Currency
-    {
-        EUR,
-        USD,
-        GBP
-    }
-}
+// namespace WalletWise.Models.Enums
+// {
+//     public enum Currency
+//     {
+//         EUR,
+//         USD,
+//         GBP
+//     }
+// }

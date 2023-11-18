@@ -13,8 +13,8 @@ namespace WalletWise.Models.ViewModels
         public int Id { get; set; }
         public required string IdUser { get; set; }
         public DateTime Date { get; set; } 
-        public Money Amount { get; set; }
-        // public decimal Amount  { get; set; }
+        public decimal Amount { get; set; }
+        public string Currency { get; set; }     
         public string? Name { get; set; }
         public string Location { get; set; }
         // public List<TagsViewModel> Tags { get; set; }

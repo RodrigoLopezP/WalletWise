@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WalletWise.Models.Entities;
 
 public partial class Tag
 {
+    [Key]
     public int TagId { get; set; }
 
     public string TagUserId { get; set; }

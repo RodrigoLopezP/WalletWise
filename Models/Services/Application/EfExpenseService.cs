@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using WalletWise.Models.Entities;
-using WalletWise.Models.Enums;
+// using WalletWise.Models.Enums;
 using WalletWise.Models.InputModels;
 using WalletWise.Models.Services.Infrastructure;
 using WalletWise.Models.ViewModels;
@@ -24,12 +24,13 @@ namespace WalletWise.Models.Services.Application
         public async Task AddExpenseAsync(ExpenseInputModel inputModel)
           {
                string tempUsername = "anon";
-               string tempCurrency=Currency.EUR.ToString();
+               // string tempCurrency=Currency.EUR.ToString();
+               string tempCurrency="EUR";
                Expense newExpense = new()
                {
                     ExpenName = inputModel.Name,
-                    Amount = new(tempCurrency,
-                                   inputModel.Amount),
+                    // ExpenAmount = new(tempCurrency,
+                    //                inputModel.Amount),
                     ExpenDate = inputModel.Date,
                     ExpenLocation = inputModel.Location,
                     ExpenModTimestamp = DateAndTime.Now,
@@ -50,7 +51,6 @@ namespace WalletWise.Models.Services.Application
                                     Id = x.ExpenId,
                                     IdUser = x.ExpenUserId,
                                     Date = x.ExpenDate,
-                                    Amount = x.Amount,
                                     Name = x.ExpenName,
                                     Location = x.ExpenLocation
                                })
