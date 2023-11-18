@@ -44,19 +44,13 @@ namespace WalletWise.Models.Services.Application
           public async Task<List<ExpenseViewModel>> GetExpensesAsync(string userId)
           {
                IQueryable<Expense> queryLinQ = dbContextWW.Expenses;
-               List<ExpenseViewModel> a = await queryLinQ.AsNoTracking()
-                               .Where(exp => exp.ExpenUserId == userId)
-                               .Select(x => new ExpenseViewModel
-                               {
-                                    Id = x.ExpenId,
-                                    IdUser = x.ExpenUserId,
-                                    Date = x.ExpenDate,
-                                    Name = x.ExpenName,
-                                    Location = x.ExpenLocation
-                               })
-                               .OrderByDescending(x => x.Date)
+               List<ExpenseViewModel> a = await queryLinQ
+                              .AsNoTracking()
+                              .Where(exp => exp.ExpenUserId == userId)
+                              .Include(c=> c.ExpenCurrencyNavigation)
+                              .OrderByDescending(x => x.ExpenDate)
+                              .Select(x =>ExpenseViewModel.FromEntity(x))
                               .ToListAsync();
-
                return a;
           }
      }

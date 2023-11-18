@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletWise.Models.Entities;
 using WalletWise.Models.ValueObjects;
 
 namespace WalletWise.Models.ViewModels
@@ -18,6 +19,18 @@ namespace WalletWise.Models.ViewModels
         public string? Name { get; set; }
         public string Location { get; set; }
         // public List<TagsViewModel> Tags { get; set; }
-        
+        public static ExpenseViewModel FromEntity(Expense entity)
+        {
+            return new ExpenseViewModel()
+            {
+                Id = entity.ExpenId,
+                IdUser = entity.ExpenUserId,
+                Date = entity.ExpenDate,
+                Amount = entity.ExpenTotalAmount,
+                Currency = entity.ExpenCurrencyNavigation.CurrAcronym,
+                Name = entity.ExpenName,
+                Location = entity.ExpenLocation,
+            };
+        }
     }
 }
