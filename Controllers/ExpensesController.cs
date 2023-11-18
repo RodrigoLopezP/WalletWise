@@ -18,7 +18,8 @@ namespace WalletWise.Controllers
         private readonly ILogger<ExpensesController> _logger;
           private readonly IExpenseService _expenseService;
 
-          public ExpensesController(ILogger<ExpensesController> logger, IExpenseService expenseService)
+          public ExpensesController(ILogger<ExpensesController> logger,
+                                             IExpenseService expenseService)
         {
             _logger = logger;
                this._expenseService = expenseService;

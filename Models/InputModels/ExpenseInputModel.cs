@@ -20,7 +20,7 @@ namespace WalletWise.Models.InputModels
 
         [Required(ErrorMessage = "La valuta è richiesta"),
         Display(Name = "Valuta")]
-        public string? Currency { get; set; }//TO DO: levare il nullable e renderlo obbligatorio
+        public int CurrencyId { get; set; }//ToDo: levare il nullable
 
         [Display(Name = "Data")]
         public DateTime Date { get; set; }
