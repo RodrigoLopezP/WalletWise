@@ -25,6 +25,7 @@ public partial class DbContextWalletWise : DbContext
     public virtual DbSet<ExpenseDetail> ExpenseDetails { get; set; }
 
     public virtual DbSet<Tag> Tags { get; set; }
+    public virtual DbSet<Currency> Currencies { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
     }

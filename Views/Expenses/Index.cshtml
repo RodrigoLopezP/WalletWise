@@ -29,6 +29,7 @@
                         <th>Data</th>
                         <th>Nome</th>
                         <th>Soldi</th>
+                        <th>Valuta</th>
                         <th>Azioni</th>
                     </tr>
                 </thead>
@@ -69,12 +70,12 @@
                         <label asp-for="NewExpense.CurrencyId" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-3">
                             @* <select asp-items="" asp-for="NewExpense.CurrencyId" class="form-control" placeholder="EUR"></select> *@
-                            @* <select asp-for="NewExpense.CurrencyId" class="form-control" placeholder="EUR">
+                            <select asp-for="NewExpense.CurrencyId" class="form-control" placeholder="EUR">
                                     @foreach(var item in Model.CurrencyList){
                                         <option value="@item.Id">
                                             @item.Acronym
                                         </option>
-                                    } *@
+                                    }
                             </select>
                         </div>
                         <div class="col-sm-1"></div>

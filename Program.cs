@@ -13,6 +13,7 @@ IConfiguration configuration = builder.Configuration;
 //SERVICES CONFIGURATION
 services.AddMvc();
 services.AddTransient<IExpenseService, EfExpenseService>();
+services.AddTransient<ICurrencyService, EfCurrencyService>();
 services.AddDbContextPool<DbContextWalletWise>(x =>
 {
     //  string connectionString = configuration.GetSection("ConnectionStrings").GetValue<string>("DefaultConnection");

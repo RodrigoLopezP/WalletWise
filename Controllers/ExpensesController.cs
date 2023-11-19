@@ -16,22 +16,27 @@ namespace WalletWise.Controllers
     public class ExpensesController : Controller
     {
         private readonly ILogger<ExpensesController> _logger;
-          private readonly IExpenseService _expenseService;
+        private readonly IExpenseService _expenseService;
+        private readonly ICurrencyService _currencyService;
 
-          public ExpensesController(ILogger<ExpensesController> logger,
-                                             IExpenseService expenseService)
+        public ExpensesController(ILogger<ExpensesController> logger,
+                                    IExpenseService expenseService,
+                                    ICurrencyService currencyService)
         {
+            _currencyService = currencyService;
             _logger = logger;
-               this._expenseService = expenseService;
-          }
+            _expenseService = expenseService;
+        }
 
         public async Task<IActionResult> Index()
         {
             string userId="anon";
-            // _logger.LogDebug("Getting expenses list  of {userId}...",userId);
+            _logger.LogTrace($"Select all expenses - userId {userId}");
             ExpenseListViewModel viewModel= new (){
                 ExpenseList=await _expenseService.GetExpensesAsync(userId)
             };
+            _logger.LogTrace($"Select all currencies for insert modal- userId {userId}");
+            viewModel.CurrencyList=await _currencyService.GetExpensesAsync();
             return View(viewModel);
         }
 

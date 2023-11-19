@@ -16,13 +16,13 @@ public partial class Expense
     public int  ExpenCurrencyId{ get; set; }
     public string ExpenName { get; set; }
     public DateTime ExpenDate { get; set; }
+    public string ExpenLocation { get; set; }
+    public DateTime ExpenModTimestamp { get; set; }
     public int? ExpenTag1 { get; set; }
     public int? ExpenTag2 { get; set; }
     public int? ExpenTag3 { get; set; }
     public int? ExpenTag4 { get; set; }
     public int? ExpenTag5 { get; set; }
-    public string ExpenLocation { get; set; }
-    public DateTime ExpenModTimestamp { get; set; }
     public virtual Currency ExpenCurrencyNavigation { get; set; }
     public virtual Tag ExpenTag1Navigation { get; set; }
     public virtual Tag ExpenTag2Navigation { get; set; }

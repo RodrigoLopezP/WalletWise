@@ -24,17 +24,15 @@ namespace WalletWise.Models.Services.Application
         public async Task AddExpenseAsync(ExpenseInputModel inputModel)
           {
                string tempUsername = "anon";
-               // string tempCurrency=Currency.EUR.ToString();
-               string tempCurrency="EUR";
                Expense newExpense = new()
                {
+                    ExpenUserId = tempUsername,
                     ExpenName = inputModel.Name,
-                    // ExpenAmount = new(tempCurrency,
-                    //                inputModel.Amount),
+                    ExpenTotalAmount=inputModel.Amount,
+                    ExpenCurrencyId=inputModel.CurrencyId,
                     ExpenDate = inputModel.Date,
                     ExpenLocation = inputModel.Location,
                     ExpenModTimestamp = DateAndTime.Now,
-                    ExpenUserId = tempUsername,
                };
                dbContextWW.Add(newExpense);
                await dbContextWW.SaveChangesAsync();
