@@ -1,7 +1,8 @@
 # WalletWise
 WalletWise è una webapp che consente a più utenti la registrazione manuale delle loro spese fatte, oltre che al inserimento programmato quelle
 ricorrenti.
-A ogni spesa possono essere aggiunti 5 tag per poter categorizzare come una spesa di un certo tipo. In questo modo è possibile anche creare delle statistiche mensili da poter analizzare
+
+A ogni spesa possono essere aggiunti 5 tag per poter categorizzare come una spesa di un certo tipo, in questo modo è possibile anche creare delle statistiche mensili per eventuali analisi.
 
 ### Backend
 
@@ -19,7 +20,7 @@ A ogni spesa possono essere aggiunti 5 tag per poter categorizzare come una spes
 E' stato usato un approcio _Database First_ per la creazione del database in MySql. Per successive modifiche, ad esempio la creazione della tabella Currencies e per una eventuale aggiunta delle tabelle Identity, viene fatto tramite Migrations. 
 
 *(TO DO: creazione tabella ASPNET_USERS e scheduled expenses)*
-![Database schema](docs/xReadMe/WalletWise-Db.jpg)
+![Database schema](docs/xReadMe/WalletWise-DB.jpg)
 
 # Installazione strumenti
  - Installazione framework - [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
