@@ -13,30 +13,22 @@ using WalletWise.Models.ViewModels;
 namespace WalletWise.Controllers
 {
     [Route("[controller]")]
-    public class ExpensesController : Controller
+    public class ExpensesController(ILogger<ExpensesController> _logger,
+                                    IExpenseService _expenseService,
+                                    ICurrencyService _currencyService)
+                                    : Controller
     {
-        private readonly ILogger<ExpensesController> _logger;
-        private readonly IExpenseService _expenseService;
-        private readonly ICurrencyService _currencyService;
-
-        public ExpensesController(ILogger<ExpensesController> logger,
-                                    IExpenseService expenseService,
-                                    ICurrencyService currencyService)
-        {
-            _currencyService = currencyService;
-            _logger = logger;
-            _expenseService = expenseService;
-        }
 
         public async Task<IActionResult> Index()
         {
-            string userId="anon";
+            string userId = "anon";
             _logger.LogTrace($"Select all expenses - userId {userId}");
-            ExpenseListViewModel viewModel= new (){
-                ExpenseList=await _expenseService.GetExpensesAsync(userId)
+            ExpenseListViewModel viewModel = new()
+            {
+                ExpenseList = await _expenseService.GetExpensesAsync(userId)
             };
             _logger.LogTrace($"Select all currencies for insert modal- userId {userId}");
-            viewModel.CurrencyList=await _currencyService.GetExpensesAsync();
+            viewModel.CurrencyList = await _currencyService.GetExpensesAsync();
             return View(viewModel);
         }
 
