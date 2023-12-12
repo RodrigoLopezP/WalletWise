@@ -71,7 +71,7 @@ namespace WalletWise.Migrations
 
             migrationBuilder.Sql(@$"
                 INSERT INTO currencies
-                (curr_id,curr_name,Curre_acronym)
+                (curr_id,curr_name,curr_acronym)
                 VALUES
                 (1,'Euro','EUR');");
             migrationBuilder.Sql(@$"
@@ -101,7 +101,7 @@ namespace WalletWise.Migrations
 
             migrationBuilder.Sql(@$"
                 DELETE FROM currencies
-                WHERE curre_acronym='EUR' AND curr_name='Euro' AND curr_id=1;");
+                WHERE curr_acronym='EUR' AND curr_name='Euro' AND curr_id=1;");
 
             migrationBuilder.DropTable(
                 name: "currencies");
