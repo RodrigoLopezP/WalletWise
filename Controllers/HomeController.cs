@@ -10,7 +10,8 @@ public class HomeController(ILogger<HomeController> logger) : Controller
 
     public IActionResult Index()
     {
-        return RedirectToAction(nameof(ExpensesController.Index), "Expenses");
+        string actionName=nameof(ExpensesController.Index);
+        return RedirectToAction(actionName, "Expenses");
     }
 
     public IActionResult Privacy()

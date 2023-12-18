@@ -22,7 +22,7 @@ namespace WalletWise.Models.Services.Application
             throw new NotImplementedException();
         }
 
-        public async Task<List<CurrencyViewModel>> GetExpensesAsync()
+        public async Task<List<CurrencyViewModel>> GetCurrenciesAsync()
         {
             var query =  _dbContextWW.Currencies
                     .AsNoTracking()

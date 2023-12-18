@@ -14,8 +14,8 @@ namespace WalletWise.Models.InputModels
         ]
         public required string Name { get; set; }
 
-        [Required(ErrorMessage = "La quantità spesa è richiesta"),
-        Display(Name = "Quantità")]
+        [Required(ErrorMessage ="This field can't be null"),
+        Display(Name="Total amount")]
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "La valuta è richiesta"),

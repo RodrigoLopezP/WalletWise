@@ -17,11 +17,11 @@ namespace WalletWise.Models.Services.Application
           private readonly DbContextWalletWise dbContextWW;
 
           public EfExpenseService(DbContextWalletWise dbContextWW)
-        {
+          {
                this.dbContextWW = dbContextWW;
           }
 
-        public async Task AddExpenseAsync(ExpenseInputModel inputModel)
+          public async Task AddExpenseAsync(ExpenseInputModel inputModel)
           {
                string tempUsername = "anon";
                Expense newExpense = new()
@@ -39,9 +39,22 @@ namespace WalletWise.Models.Services.Application
                return;
           }
 
-          public async Task<List<ExpenseViewModel>> GetExpensesAsync(string userId)
+        public async Task<ExpenseEditModel> GetExpenseForEdit(int id)
+        {
+            IQueryable<ExpenseEditModel> query= dbContextWW.Expenses
+                              .Where(exp=> exp.ExpenId==id)
+                              .AsNoTracking()
+                              .Include(curr=> curr.ExpenCurrencyNavigation)
+                              .Select( sel=> ExpenseEditModel.FromEntity(sel));
+
+            ExpenseEditModel result= await query.SingleAsync();
+            return result;
+        }
+
+        public async Task<List<ExpenseViewModel>> GetExpensesAsync(string userId)
           {
                IQueryable<Expense> queryLinQ = dbContextWW.Expenses;
+
                List<ExpenseViewModel> a = await queryLinQ
                               .AsNoTracking()
                               .Where(exp => exp.ExpenUserId == userId)
@@ -50,6 +63,24 @@ namespace WalletWise.Models.Services.Application
                               .Select(x =>ExpenseViewModel.FromEntity(x))
                               .ToListAsync();
                return a;
+          }
+
+          public async Task<ExpenseEditModel> EditExpensesAsync(ExpenseEditModel expenseEditModel)
+          {
+               Expense expenseToEdit= await dbContextWW.Expenses.FindAsync(expenseEditModel.Id);
+
+               // expToEdit.ExpenId = expenseEditModel.Id;
+               // expToEdit.ExpenUserId = expenseEditModel.UserId;
+               expenseToEdit.ExpenTotalAmount = expenseEditModel.TotalAmount;
+               expenseToEdit.ExpenCurrencyId = expenseEditModel.CurrencyId;
+               expenseToEdit.ExpenName = expenseEditModel.Name;
+               expenseToEdit.ExpenDate = expenseEditModel.Date;
+               expenseToEdit.ExpenLocation = expenseEditModel.Location;
+               expenseToEdit.ExpenModTimestamp = DateTime.Now;
+
+               await dbContextWW.SaveChangesAsync();
+
+               return ExpenseEditModel.FromEntity(expenseToEdit);
           }
      }
 }

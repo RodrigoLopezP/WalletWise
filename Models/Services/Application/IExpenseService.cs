@@ -10,6 +10,8 @@ namespace WalletWise.Models.Services.Application
     public interface IExpenseService
     {
         Task AddExpenseAsync(ExpenseInputModel inputModel);
+        Task<ExpenseEditModel> GetExpenseForEdit(int id);
         Task <List<ExpenseViewModel>> GetExpensesAsync(string userId);
+        Task<ExpenseEditModel> EditExpensesAsync(ExpenseEditModel expenseToEdit);
     }
 }

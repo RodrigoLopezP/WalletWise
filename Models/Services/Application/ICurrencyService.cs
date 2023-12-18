@@ -11,6 +11,6 @@ namespace WalletWise.Models.Services.Application
     public interface ICurrencyService
     {
         Task AddCurrencyAsync(CurrencyInputModel inputModel);
-        Task <List<CurrencyViewModel>> GetExpensesAsync();
+        Task <List<CurrencyViewModel>> GetCurrenciesAsync();
     }
 }

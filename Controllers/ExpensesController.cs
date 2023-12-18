@@ -5,6 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.Extensions.Logging;
 using WalletWise.Models.InputModels;
 using WalletWise.Models.Services.Application;
@@ -28,7 +29,7 @@ namespace WalletWise.Controllers
                 ExpenseList = await _expenseService.GetExpensesAsync(userId)
             };
             _logger.LogTrace($"Select all currencies for insert modal- userId {userId}");
-            viewModel.CurrencyList = await _currencyService.GetExpensesAsync();
+            viewModel.CurrencyList = await _currencyService.GetCurrenciesAsync();
             return View(viewModel);
         }
 
@@ -37,6 +38,38 @@ namespace WalletWise.Controllers
         {
             await _expenseService.AddExpenseAsync(inputModel.NewExpense);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet(nameof(Edit))]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            ExpenseEditPageModel result= new();
+            
+            result.ExpenseEditModel= await _expenseService.GetExpenseForEdit(Id);
+            result.CurrencyInputModel= await _currencyService.GetCurrenciesAsync();
+
+            ViewData["Title"]="Edit expense";
+            return View(result);
+        }
+        [HttpPost(nameof(Edit))]
+        public async Task<IActionResult> Edit(ExpenseEditModel expenseEditModel)
+        {
+            if (ModelState.IsValid == false)
+            {
+                ViewBag["Title"] = "Edit expense";
+                return View();
+            }
+            try
+            {
+                _logger.LogInformation(expenseEditModel.Id, $"Edit expense: id {expenseEditModel.Id} - id utente: {expenseEditModel.UserId}");
+                ExpenseEditModel editedExpense= await _expenseService.EditExpensesAsync(expenseEditModel);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (SystemException exc)
+            {
+                _logger.LogError(expenseEditModel.Id, $"Something is wrong during - Edit expense: id {expenseEditModel.Id} - id utente: {expenseEditModel.UserId}");
+                throw exc;
+            }
         }
     }
 }
