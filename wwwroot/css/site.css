@@ -19,6 +19,13 @@ html {
 
 /*custom css*/
 body {
+  background-color: #212529;;
+  color: whitesmoke;
+}
+
+.modal-content{
   background-color: #212529;
   color: whitesmoke;
 }
+
+
