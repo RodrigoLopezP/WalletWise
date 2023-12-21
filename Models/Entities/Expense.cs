@@ -16,8 +16,9 @@ public partial class Expense
     public int  ExpenCurrencyId{ get; set; }
     public string ExpenName { get; set; }
     public DateTime ExpenDate { get; set; }
-    public string ExpenLocation { get; set; }
+    public string? ExpenLocation { get; set; }
     public DateTime ExpenModTimestamp { get; set; }
+    public string? ExpenNote{get; set;}
     public int? ExpenTag1 { get; set; }
     public int? ExpenTag2 { get; set; }
     public int? ExpenTag3 { get; set; }

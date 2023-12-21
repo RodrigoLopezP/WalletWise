@@ -19,15 +19,18 @@ namespace WalletWise.Models.InputModels
 
         [Required(ErrorMessage = "Il nome è obbligatorio"),
         MaxLength(100, ErrorMessage = "Lunghezza massima del nome: 100 caratteri"),
-        Display(Name = "Nome")]
+        Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Data")]
+        [Display(Name = "Date")]
         public DateTime Date { get; set; }
 
-        [Display(Name = "Luogo")]
-        public string Location { get; set; }
-
+        [Display(Name = "Location")]
+        public string? Location { get; set; }
+        [Display(Name="Note")]
+        public string? Note { get; set; }
+        
+        [Display(Name ="Currency")]
         public int CurrencyId {get; set;}
         public static ExpenseEditModel FromEntity(Expense ent)
         {
@@ -38,6 +41,7 @@ namespace WalletWise.Models.InputModels
                 Name= ent.ExpenName,
                 Date=ent.ExpenDate,
                 Location=ent.ExpenLocation,
+                Note=ent.ExpenNote,
                 CurrencyId=ent.ExpenCurrencyId
             };
             return result;

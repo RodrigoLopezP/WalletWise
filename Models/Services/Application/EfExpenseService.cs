@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
@@ -39,6 +40,12 @@ namespace WalletWise.Models.Services.Application
                return;
           }
 
+     public async Task<bool> ExistExpenseById(int id){
+          bool result=await dbContextWW.Expenses
+                    .Where(exp=> exp.ExpenId==id)
+                    .AnyAsync();
+          return result;
+     }
         public async Task<ExpenseEditModel> GetExpenseForEdit(int id)
         {
             IQueryable<ExpenseEditModel> query= dbContextWW.Expenses
@@ -55,12 +62,14 @@ namespace WalletWise.Models.Services.Application
           {
                IQueryable<Expense> queryLinQ = dbContextWW.Expenses;
 
-               List<ExpenseViewModel> a = await queryLinQ
+               queryLinQ = queryLinQ
                               .AsNoTracking()
                               .Where(exp => exp.ExpenUserId == userId)
-                              .Include(c=> c.ExpenCurrencyNavigation)
-                              .OrderByDescending(x => x.ExpenDate)
-                              .Select(x =>ExpenseViewModel.FromEntity(x))
+                              .Include(c => c.ExpenCurrencyNavigation)
+                              .OrderByDescending(x => x.ExpenDate);
+
+               List<ExpenseViewModel> a = await queryLinQ
+                              .Select(x => ExpenseViewModel.FromEntity(x))
                               .ToListAsync();
                return a;
           }
@@ -77,10 +86,29 @@ namespace WalletWise.Models.Services.Application
                expenseToEdit.ExpenDate = expenseEditModel.Date;
                expenseToEdit.ExpenLocation = expenseEditModel.Location;
                expenseToEdit.ExpenModTimestamp = DateTime.Now;
+               expenseToEdit.ExpenNote=expenseEditModel.Note;
 
                await dbContextWW.SaveChangesAsync();
 
                return ExpenseEditModel.FromEntity(expenseToEdit);
           }
-     }
+
+        public async Task DeleteExpense(int expenId)
+        {
+          try
+          {
+          Expense expenseToDelete= await dbContextWW.Expenses
+                                   .Where(exp=> exp.ExpenId==expenId)
+                                   .AsNoTracking()
+                                   .SingleAsync();
+          dbContextWW.Remove(expenseToDelete);
+          await dbContextWW.SaveChangesAsync();
+          }
+          catch (InvalidOperationException exc)
+          {
+               throw;
+          }
+          
+        }
+    }
 }

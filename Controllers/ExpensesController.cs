@@ -56,7 +56,6 @@ namespace WalletWise.Controllers
         {
             if (ModelState.IsValid == false)
             {
-                ViewBag["Title"] = "Edit expense";
                 return View();
             }
             try
@@ -70,6 +69,17 @@ namespace WalletWise.Controllers
                 _logger.LogError(expenseEditModel.Id, $"Something is wrong during - Edit expense: id {expenseEditModel.Id} - id utente: {expenseEditModel.UserId}");
                 throw exc;
             }
+        }
+
+        [HttpPost(nameof(Delete))]
+        public async Task<IActionResult> Delete(int expenId)
+        {
+            bool existId= await _expenseService.ExistExpenseById(expenId);
+            if(!existId){
+
+            }
+            await _expenseService.DeleteExpense(expenId);
+            return View(nameof(Index));
         }
     }
 }

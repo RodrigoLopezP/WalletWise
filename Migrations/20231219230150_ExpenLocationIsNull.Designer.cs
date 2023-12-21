@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WalletWise.Models.Services.Infrastructure;
 
@@ -10,9 +11,11 @@ using WalletWise.Models.Services.Infrastructure;
 namespace WalletWise.Migrations
 {
     [DbContext(typeof(DbContextWalletWise))]
-    partial class DbContextWalletWiseModelSnapshot : ModelSnapshot
+    [Migration("20231219230150_ExpenLocationIsNull")]
+    partial class ExpenLocationIsNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,10 +79,6 @@ namespace WalletWise.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("expen_name");
-
-                    b.Property<string>("ExpenNote")
-                        .HasColumnType("text")
-                        .HasColumnName("expen_note");
 
                     b.Property<int?>("ExpenTag1")
                         .HasColumnType("int")

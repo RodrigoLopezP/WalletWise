@@ -1,5 +1,8 @@
 @model ExpenseEditPageModel
 
+    <div class="row">
+        <div class="col col-lg-2"></div>
+        <div class="col col-lg-8 col-sm-12">
 <div class="container">
     <form class="form-inline" method="post">
         <div class="modal-header">
@@ -38,12 +41,16 @@
             <div class="row mb-3 align-items-center">
                 <label asp-for="@Model.ExpenseEditModel.Date" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-4">
-                    <input asp-for="@Model.ExpenseEditModel.Date" type="date" placeholder="dd-MM-yyyy" class="form-control">
+                    <input asp-for="@Model.ExpenseEditModel.Date" type="date" class="form-control">
                 </div>
                 <label asp-for="@Model.ExpenseEditModel.Location" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-4">
                     <input asp-for="@Model.ExpenseEditModel.Location" class="form-control">
                 </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ExpenseEditModel.Note"> Note</label>
+                <textarea type="text" asp-for="@Model.ExpenseEditModel.Note" class="form-control" rows=3></textarea>
             </div>
         </div>
         <div class="modal-footer">
@@ -52,3 +59,6 @@
         </div>
     </form>
 </div>
+        </div>
+        <div class="col col-lg-2"></div>
+    </div>

@@ -81,8 +81,9 @@ public partial class DbContextWalletWise : DbContext
             entity.Property(e => e.ExpenTag5).HasColumnName("expen_tag5");
 
             entity.Property(e => e.ExpenLocation)
-            .HasMaxLength(100)
-            .HasColumnName("expen_location");
+                .HasMaxLength(100)
+                .IsRequired(false)
+                .HasColumnName("expen_location");
 
             entity.Property(e => e.ExpenModTimestamp)
                 .HasColumnType("datetime")
@@ -91,6 +92,11 @@ public partial class DbContextWalletWise : DbContext
             entity.Property(e => e.ExpenUserId)
                 .HasColumnType("text")
                 .HasColumnName("expen_user_id");
+
+            entity.Property(e=> e.ExpenNote)
+                .HasColumnType("text")
+                .IsRequired(false)
+                .HasColumnName("expen_note");
             
             entity.HasIndex(e => e.ExpenCurrencyId, "FK_currency_expenses");
             entity.HasOne(d=>d.ExpenCurrencyNavigation).WithMany(p => p.CurrencyExpenseNavigations)

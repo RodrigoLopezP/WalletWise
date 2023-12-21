@@ -16,8 +16,11 @@ namespace WalletWise.Models.ViewModels
         public DateTime Date { get; set; } 
         public decimal Amount { get; set; }
         public string Currency { get; set; }     
-        public string? Name { get; set; }
-        public string Location { get; set; }
+        public string Name { get; set; }
+        public string? Location { get; set; }
+        public string? Note { get; set; }
+        
+        
         // public List<TagsViewModel> Tags { get; set; }
         public static ExpenseViewModel FromEntity(Expense entity)
         {
@@ -30,6 +33,7 @@ namespace WalletWise.Models.ViewModels
                 Currency = entity.ExpenCurrencyNavigation.CurrAcronym,
                 Name = entity.ExpenName,
                 Location = entity.ExpenLocation,
+                Note = entity.ExpenNote
             };
         }
     }
