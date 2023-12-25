@@ -45,7 +45,8 @@
 </div>
 
 <!-- Modal - NewExpense -->
-<div class="modal fade" id="ModalNewExpense" tabindex="-1" aria-labelledby="NewExpenseLabel" aria-hidden="true">
+
+<div class="modal fade bd-example-modal-lg" id="ModalNewExpense" tabindex="-1" aria-labelledby="NewExpenseLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-inline" method="post" asp-action="Add">
@@ -61,13 +62,18 @@
                         </div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label asp-for="NewExpense.Amount" for="colFormLabel" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
+                            <label asp-for="NewExpense.Amount" for="colFormLabel" class="col-form-label"></label>
+                        </div>
+                        <div class="col-sm-5">
                             <input asp-for="NewExpense.Amount" type="number" step="0.01" min="0.01" class="form-control"
                                 placeholder="00.00">
                         </div>
-                        <div class="col-sm-1"></div>
-                        <label asp-for="NewExpense.CurrencyId" class="col-sm-2 col-form-label"></label>
+                        @* da qui in poi col 5  *@
+                        <div class="col-sm-2">
+                            <label asp-for="NewExpense.CurrencyId" class="col-form-label"></label>
+                        </div>
+                        @* <label asp-for="NewExpense.CurrencyId" class="col-sm-2 col-form-label"></label> *@
                         <div class="col-sm-3">
                             @* <select asp-items="" asp-for="NewExpense.CurrencyId" class="form-control" placeholder="EUR"></select> *@
                             <select asp-for="NewExpense.CurrencyId" class="form-control" placeholder="EUR">
@@ -81,12 +87,16 @@
                         <div class="col-sm-1"></div>
                     </div>
                     <div class="row mb-3 align-items-center">
-                        <label asp-for="NewExpense.Date" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
+                            <label asp-for="NewExpense.Date" class="col-form-label"></label>
+                        </div>
+                        <div class="col-sm-5">
                             <input asp-for="NewExpense.Date" type="date" class="form-control">
                         </div>
-                        <label asp-for="NewExpense.Location" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
+                        <label asp-for="NewExpense.Location" class="col-form-label"></label>
+                        </div>
+                        <div class="col-sm-3">
                             <input asp-for="NewExpense.Location" class="form-control">
                         </div>
                     </div>
@@ -99,3 +109,60 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="ModalExpenseDelete" tabindex="-1" aria-labelledby="ModelEditLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModelEditLabel">Elimina</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <input id="inputModalExpenseId" expense-id-to-delete="">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="Delete-confirm-button">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function (){
+            var idExpense;
+            $('button[data-bs-target="#ModalExpenseDelete"]').click(function () {
+                idExpense = $(this)
+                    .closest('tr')
+                    .attr('expense-id');
+                $('input[expense-id-to-delete]').val(idExpense);
+            });
+            $('#Delete-confirm-button').click(function () {                
+                   $.ajax({
+                    url:'@Url.Action("Delete")',
+                    type:'DELETE',
+                    data:{
+                        id: idExpense
+                    },
+                    success: function(response){
+                        console.log("Expense Confirmed Id"+idExpense);
+                        $(document).ajaxStop(function(){
+                         window.location.reload();
+                        });
+                    },
+                    error: function(xhr, status, error){
+                        console.log("Errore dettagliato:");
+                        console.log("XHR Object:", xhr);
+                        console.log("Status:", status);
+                        console.log("Error:", error);
+                        $(this).closest('#ModalExpenseDelete').modal('hide');
+                    }
+
+                    });
+            });
+        });
+    </script>
+}

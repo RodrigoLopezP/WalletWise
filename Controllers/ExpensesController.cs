@@ -71,15 +71,15 @@ namespace WalletWise.Controllers
             }
         }
 
-        [HttpPost(nameof(Delete))]
-        public async Task<IActionResult> Delete(int expenId)
+        [HttpDelete(nameof(Delete))]
+        public async Task<IActionResult> Delete(int id)
         {
-            bool existId= await _expenseService.ExistExpenseById(expenId);
+            bool existId= await _expenseService.ExistExpenseById(id);
             if(!existId){
 
             }
-            await _expenseService.DeleteExpense(expenId);
-            return View(nameof(Index));
+            await _expenseService.DeleteExpense(id);
+            return RedirectToAction(nameof(ExpensesController.Index),"Home");
         }
     }
 }

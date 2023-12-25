@@ -93,22 +93,22 @@ namespace WalletWise.Models.Services.Application
                return ExpenseEditModel.FromEntity(expenseToEdit);
           }
 
-        public async Task DeleteExpense(int expenId)
-        {
-          try
+          public async Task DeleteExpense(int expenId)
           {
-          Expense expenseToDelete= await dbContextWW.Expenses
-                                   .Where(exp=> exp.ExpenId==expenId)
-                                   .AsNoTracking()
-                                   .SingleAsync();
-          dbContextWW.Remove(expenseToDelete);
-          await dbContextWW.SaveChangesAsync();
+               try
+               {
+                    Expense expenseToDelete = await dbContextWW.Expenses
+                                             .Where(exp => exp.ExpenId == expenId)
+                                             .AsNoTracking()
+                                             .SingleAsync();
+                    dbContextWW.Remove(expenseToDelete);
+                    await dbContextWW.SaveChangesAsync();
+               }
+               catch (InvalidOperationException exc)
+               {
+                    throw;
+               }
+
           }
-          catch (InvalidOperationException exc)
-          {
-               throw;
-          }
-          
-        }
-    }
+     }
 }
