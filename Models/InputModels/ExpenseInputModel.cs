@@ -10,7 +10,7 @@ namespace WalletWise.Models.InputModels
     {
         [Required(ErrorMessage = "Il nome è obbligatorio"),
         MaxLength(100, ErrorMessage = "Lunghezza massima del nome: 100 caratteri"),
-        Display(Name = "Nome")
+        Display(Name = "Name")
         ]
         public required string Name { get; set; }
 
@@ -19,13 +19,16 @@ namespace WalletWise.Models.InputModels
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "La valuta è richiesta"),
-        Display(Name = "Valuta")]
+        Display(Name = "Currency")]
         public int CurrencyId { get; set; }//ToDo: levare il nullable
 
-        [Display(Name = "Data")]
+        [Display(Name = "Date")]
         public DateTime Date { get; set; }
 
-        [Display(Name = "Luogo")]
+        [Display(Name = "Location")]
         public string? Location { get; set; }
+
+        [Display(Name = "Note")]
+        public string? Note { get; set; }
     }
 }

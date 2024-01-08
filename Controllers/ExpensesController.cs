@@ -19,7 +19,6 @@ namespace WalletWise.Controllers
                                     ICurrencyService _currencyService)
                                     : Controller
     {
-
         public async Task<IActionResult> Index()
         {
             string userId = "anon";
@@ -32,7 +31,6 @@ namespace WalletWise.Controllers
             viewModel.CurrencyList = await _currencyService.GetCurrenciesAsync();
             return View(viewModel);
         }
-
         [HttpPost]
         public async Task<IActionResult> Add(ExpenseListViewModel inputModel)
         {
@@ -43,6 +41,12 @@ namespace WalletWise.Controllers
         [HttpGet(nameof(Edit))]
         public async Task<IActionResult> Edit(int Id)
         {
+            bool expenseExist=await _expenseService.ExistExpenseById(Id);
+            if (expenseExist is false){
+                _logger.LogWarning($"Edit action can't proceed. Expense id {Id} not exists");
+                return View();
+            }
+            _logger.LogDebug($"Edit action | Expense {Id} was found");
             ExpenseEditPageModel result= new();
             
             result.ExpenseEditModel= await _expenseService.GetExpenseForEdit(Id);
@@ -60,6 +64,11 @@ namespace WalletWise.Controllers
             }
             try
             {
+                bool expExist = await _expenseService.ExistExpenseById(expenseEditModel.Id);
+                if (expExist == false)
+                {
+                    return View();
+                }
                 _logger.LogInformation(expenseEditModel.Id, $"Edit expense: id {expenseEditModel.Id} - id utente: {expenseEditModel.UserId}");
                 ExpenseEditModel editedExpense= await _expenseService.EditExpensesAsync(expenseEditModel);
                 return RedirectToAction(nameof(Index));
@@ -74,9 +83,10 @@ namespace WalletWise.Controllers
         [HttpDelete(nameof(Delete))]
         public async Task<IActionResult> Delete(int id)
         {
-            bool existId= await _expenseService.ExistExpenseById(id);
-            if(!existId){
-
+            bool existId = await _expenseService.ExistExpenseById(id);
+            if (!existId)
+            {
+                return View();
             }
             await _expenseService.DeleteExpense(id);
             return RedirectToAction(nameof(ExpensesController.Index),"Home");

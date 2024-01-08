@@ -34,6 +34,7 @@ namespace WalletWise.Models.Services.Application
                     ExpenDate = inputModel.Date,
                     ExpenLocation = inputModel.Location,
                     ExpenModTimestamp = DateAndTime.Now,
+                    ExpenNote=inputModel.Note
                };
                dbContextWW.Add(newExpense);
                await dbContextWW.SaveChangesAsync();
