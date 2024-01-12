@@ -1,9 +1,9 @@
 @model ExpenseViewModel
 <tr expense-id="@Model.Id">
     <td>@Model.Date.ToString("yyyy-MM-dd")</td>
-    <td>@Model.Name</td>
-    <td>@Model.Amount</td>
-    <td>@Model.Currency</td>
+    <td class="expense-name">@Model.Name</td>
+    <td class="expense-amount">@Model.Amount</td>
+    <td class="expense-currency">@Model.Currency</td>
     <td>
         <div class="dropdown">
             <button class="btn btn-outline-primary btn-sm" type="button" id="dropDownDetail" data-bs-toggle="dropdown"

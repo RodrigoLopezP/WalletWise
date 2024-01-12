@@ -101,7 +101,8 @@
                     <div class="row mb-3 align-items-center">
                         <div class="form-group">
                             <label asp-for="NewExpense.Note" class="col-form-label"></label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="resize: none;"></textarea>
+                            @* <textarea asp-for="@Model.NewExpense.Note" class="form-control" rows="3" style="resize: none;"></textarea> *@
+                            <textarea asp-for="NewExpense.Note" class="form-control" rows="3" style="resize: none;"></textarea>
                         </div>
                     </div>
                 </div>
@@ -119,12 +120,20 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModelEditLabel">Elimina</h5>
+        <h5 class="modal-title" id="ModelEditLabel">Delete</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-            <input id="inputModalExpenseId" expense-id-to-delete="">
-        
+            <input id="inputModalExpenseId" expense-to-delete-id="" type="hidden">
+            <p>Are you sure yo want to delete this expense?</p>
+            <dl class="row">
+                <dt  class="col-sm-4"> <label asp-for="NewExpense.Name"></label></dt>
+                <dd  class="col-sm-8" id="ExpenseToDeleteName"></dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-4"><label asp-for="NewExpense.Amount"></label></dt>
+                <dd  class="col-sm-8" id="ExpenseToDeleteAmount"></dd>
+            </dl>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -138,11 +147,32 @@
     <script>
         $(document).ready(function (){
             var idExpense;
+            var expenseName;
+            var expenseAmount;
+            var expenseCurrency;
             $('button[data-bs-target="#ModalExpenseDelete"]').click(function () {
                 idExpense = $(this)
                     .closest('tr')
                     .attr('expense-id');
-                $('input[expense-id-to-delete]').val(idExpense);
+                $('input[expense-to-delete-id]').val(idExpense);
+
+                expenseName=$(this)
+                .closest('tr')
+                .find('.expense-name')
+                .text();
+
+                expenseAmount=$(this)
+                .closest('tr')
+                .find('.expense-amount')
+                .text();
+
+                expenseCurrency=$(this)
+                .closest('tr')
+                .find('.expense-currency')
+                .text();
+
+                $('#ExpenseToDeleteName').text(expenseName);
+                $('#ExpenseToDeleteAmount').text(expenseAmount+" "+expenseCurrency);
             });
             $('#Delete-confirm-button').click(function () {                
                    $.ajax({

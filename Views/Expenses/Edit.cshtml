@@ -15,7 +15,7 @@
                 <label asp-for="@Model.ExpenseEditModel.Name" for="colFormLabel" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <input asp-for="@Model.ExpenseEditModel.Name" class="form-control">
-                    <span asp-validation-for="@Model.ExpenseEditModel.Name"></span>
+                    @* <span asp-validation-for="@Model.ExpenseEditModel.Name"></span> *@
                 </div>
             </div>
             <div class="row mb-3 align-items-center">
@@ -49,16 +49,19 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.ExpenseEditModel.Note"> Note</label>
+                <label asp-for="@Model.ExpenseEditModel.Note" class="col-form-label"> Note</label>
                 <textarea type="text" asp-for="@Model.ExpenseEditModel.Note" class="form-control" rows=3></textarea>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div asp-validation-summary="All"></div>
+                </div>
+            </div>
         </div>
+        
         <div class="modal-footer">
             <a type="button" class="btn btn-secondary" asp-action="Index">Annulla</a>
             <button type="submit" class="btn btn-primary">Salva</button>
         </div>
     </form>
 </div>
-        </div>
-        <div class="col col-lg-2"></div>
-    </div>
