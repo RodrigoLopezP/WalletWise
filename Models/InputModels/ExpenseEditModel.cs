@@ -13,16 +13,18 @@ namespace WalletWise.Models.InputModels
 
         public string UserId { get; set; }
 
-        [Required(ErrorMessage ="This field can't be null"),
+        [Required(ErrorMessage ="Amount can't be null"),
         Display(Name="Total amount")]
         public decimal TotalAmount { get; set; }
 
-        [Required(ErrorMessage = "Il nome è obbligatorio"),
+        [Required(ErrorMessage = "Name field is obbligatory"),
         MaxLength(100, ErrorMessage = "Lunghezza massima del nome: 100 caratteri"),
         Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Date")]
+        [Required(ErrorMessage ="Date field is required"),
+        Display(Name = "Date")]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         [Display(Name = "Location")]

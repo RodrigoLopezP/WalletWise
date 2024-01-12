@@ -60,7 +60,12 @@ namespace WalletWise.Controllers
         {
             if (ModelState.IsValid == false)
             {
-                return View();
+                ExpenseEditPageModel expenseEditPageModel=new(){
+                    ExpenseEditModel=expenseEditModel,
+                    CurrencyInputModel=await _currencyService.GetCurrenciesAsync()
+                };
+                ViewData["Title"]="Edit expense";
+                return View(expenseEditPageModel);
             }
             try
             {
@@ -75,8 +80,8 @@ namespace WalletWise.Controllers
             }
             catch (SystemException exc)
             {
-                _logger.LogError(expenseEditModel.Id, $"Something is wrong during - Edit expense: id {expenseEditModel.Id} - id utente: {expenseEditModel.UserId}");
-                throw exc;
+                _logger.LogError(expenseEditModel.Id, $"Something is wrong during - Edit expense: id {expenseEditModel.Id} - id utente: {expenseEditModel.UserId} - Exception {exc.Message}");
+                throw;
             }
         }
 
