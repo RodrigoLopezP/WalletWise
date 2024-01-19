@@ -8,21 +8,22 @@ namespace WalletWise.Models.InputModels
 {
     public class ExpenseInputModel
     {
-        [Required(ErrorMessage = "Il nome è obbligatorio"),
-        MaxLength(100, ErrorMessage = "Lunghezza massima del nome: 100 caratteri"),
+        [Required(ErrorMessage = "Name field is required"),
+        MaxLength(100, ErrorMessage = "Max lenght: 100 characters"),
         Display(Name = "Name")
         ]
         public required string Name { get; set; }
 
-        [Required(ErrorMessage ="This field can't be null"),
+        [Required(ErrorMessage ="Amount field is required"),
         Display(Name="Total amount")]
         public decimal Amount { get; set; }
 
-        [Required(ErrorMessage = "La valuta è richiesta"),
+        [Required(ErrorMessage = "Currency field is required"),
         Display(Name = "Currency")]
         public int CurrencyId { get; set; }
 
-        [Display(Name = "Date")]
+        [Required(ErrorMessage ="Date field is required"),
+        Display(Name = "Date")]
         public DateTime Date { get; set; }
 
         [Display(Name = "Location")]
