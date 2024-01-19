@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
@@ -13,11 +14,23 @@ namespace WalletWise.Models.ViewModels
     {
         public int Id { get; set; }
         public required string IdUser { get; set; }
-        public DateTime Date { get; set; } 
-        public decimal Amount { get; set; }
-        public string Currency { get; set; }     
+
+        [Display(Name ="Name")]
         public string Name { get; set; }
+
+        [Display(Name ="Amount")]
+        public decimal Amount { get; set; }
+
+        [Display(Name ="Date")]
+        public DateTime Date { get; set; } 
+
+        [Display(Name ="Currency")]
+        public string Currency { get; set; }  
+
+        [Display(Name ="Location")]
         public string? Location { get; set; }
+
+        [Display(Name ="Note")]
         public string? Note { get; set; }
         
         

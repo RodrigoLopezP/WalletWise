@@ -44,8 +44,7 @@
     </div>
 </div>
 
-<!-- Modal - NewExpense -->
-
+<!-- Modal - Insert -->
 <div class="modal fade bd-example-modal-lg" id="ModalNewExpense" tabindex="-1" aria-labelledby="NewExpenseLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -115,7 +114,7 @@
     </div>
 </div>
 
-<!-- Modal Delete -->
+<!-- Modal - Delete-->
 <div class="modal fade" id="ModalExpenseDelete" tabindex="-1" aria-labelledby="ModelEditLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -138,6 +137,49 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-danger" id="Delete-confirm-button">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal - Details-->
+<div class="modal fade" id="ModalExpenseDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <dl class="row">
+            <dt class="col-sm-4"> <label asp-for="ExpenseList[0].Name"></label></dt>
+            <dd class="col-sm-8" id="ExpenseDetails-Name"></dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-4"><label asp-for="ExpenseList[0].Amount"></label></dt>
+            <dd class="col-sm-8" id="ExpenseDetails-Amount"></dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-4"><label asp-for="ExpenseList[0].Currency"></label></dt>
+            <dd class="col-sm-8" id="ExpenseDetails-Currency"></dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-4"><label asp-for="ExpenseList[0].Date"></label></dt>
+            <dd class="col-sm-8" id="ExpenseDetails-Date"></dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-4"><label asp-for="ExpenseList[0].Location"></label></dt>
+            <dd class="col-sm-8" id="ExpenseDetails-Location"></dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-4"><label asp-for="ExpenseList[0].Note"></label></dt>
+            <dd class="col-sm-8" id="ExpenseDetails-Note"></dd>
+        </dl>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light">Edit</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -195,7 +237,7 @@
                         $(this).closest('#ModalExpenseDelete').modal('hide');
                     }
 
-                    });
+                });
             });
         });
     </script>
