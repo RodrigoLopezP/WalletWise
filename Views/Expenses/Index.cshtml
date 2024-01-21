@@ -144,7 +144,7 @@
 
 
 <!-- Modal - Details-->
-<div class="modal fade" id="ModalExpenseDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalExpenseDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -178,7 +178,7 @@
         </dl>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-light">Edit</button>
+        <a type="button" class="btn btn-info" id="Edit-confirm-button" href="">Edit-prova</a>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
@@ -192,6 +192,8 @@
             var expenseName;
             var expenseAmount;
             var expenseCurrency;
+            
+            //Open expense modal - confirm delete 
             $('button[data-bs-target="#ModalExpenseDelete"]').click(function () {
                 idExpense = $(this)
                     .closest('tr')
@@ -216,8 +218,43 @@
                 $('#ExpenseToDeleteName').text(expenseName);
                 $('#ExpenseToDeleteAmount').text(expenseAmount+" "+expenseCurrency);
             });
-            $('#Delete-confirm-button').click(function () {                
-                   $.ajax({
+            
+            //Open expense Modal - see all expense information
+            $('button[data-bs-target="#ModalExpenseDetails"]').click(function(){
+                var idExpenseDetails=$(this)
+                                    .closest('tr')
+                                    .attr('expense-id');
+                @* console.log("idExpenseDetails ottenuto"+idExpenseDetails); *@
+                $.ajax({
+                    url:'@Url.Action("Details")',
+                    type:'GET',
+                    data:{
+                        id: idExpenseDetails
+                    },
+                    success: function(response){
+                        console.log("Showing expense details. ID: "+idExpenseDetails);
+                        $('#ExpenseDetails-Id').text(response.id);
+                        $('#ExpenseDetails-Name').text(response.name);
+                        $('#ExpenseDetails-Amount').text(response.amount);
+                        $('#ExpenseDetails-Currency').text(response.currency);
+                        $('#ExpenseDetails-Date').text(response.date.substr(0,10));
+                        $('#ExpenseDetails-Location').text(response.location);
+                        $('#ExpenseDetails-Note').text(response.note);
+
+                        //codice 02 -funziona
+                        var baseUrlEdit= '@Url.Action("Edit")';
+                        var hrefExpenseToEdit= baseUrlEdit+"?Id="+response.id;
+                        $('#Edit-confirm-button').attr('href',hrefExpenseToEdit);
+                    },
+                    error: function(xhr, status, error){
+                        console.log("Errore :"+ error);
+                    }
+                });
+            });
+
+            //Delete confirmed - send info to controller
+            $('#Delete-confirm-button').click(function () {
+                $.ajax({
                     url:'@Url.Action("Delete")',
                     type:'DELETE',
                     data:{
@@ -226,7 +263,7 @@
                     success: function(response){
                         console.log("Expense Confirmed Id"+idExpense);
                         $(document).ajaxStop(function(){
-                         window.location.reload();
+                            window.location.reload();
                         });
                     },
                     error: function(xhr, status, error){
@@ -237,6 +274,26 @@
                         $(this).closest('#ModalExpenseDelete').modal('hide');
                     }
 
+                });
+            });
+        
+            //Edit confirmed - redirect to edit expense view
+            $('#Edit-confirm-button').click(function(){
+                var expenseToEdit=20;
+                console.log("Ajax - Edit expense view - Id:"+ expenseToEdit);
+
+                $.ajax({
+                    url:'@Url.Action("Edit")',
+                    type:'GET',
+                    data:{
+                        id: expenseToEdit
+                    },
+                    success: function(response){
+                        console.log("Edit expense view - OK");
+                    },
+                    error: function(xhr, status, error){
+                        console.log("Edit expense view - ERROR: "+error+" | STATUS: "+status+" | XHR: "+xhr.responseText +" - "+xhr.status);
+                    }
                 });
             });
         });

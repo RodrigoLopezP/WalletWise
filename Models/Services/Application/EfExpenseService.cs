@@ -94,6 +94,17 @@ namespace WalletWise.Models.Services.Application
                return ExpenseEditModel.FromEntity(expenseToEdit);
           }
 
+          public async Task<ExpenseViewModel> SelectExpenseByIdAsync(int id)
+          {
+               IQueryable<ExpenseViewModel> query= dbContextWW.Expenses
+                              .Where(exp=> exp.ExpenId==id)
+                              .AsNoTracking()
+                              .Include(curr=> curr.ExpenCurrencyNavigation)
+                              .Select( sel=> ExpenseViewModel.FromEntity(sel));
+               ExpenseViewModel? result =await query.FirstOrDefaultAsync();
+               return result;
+          }
+
           public async Task DeleteExpense(int expenId)
           {
                try

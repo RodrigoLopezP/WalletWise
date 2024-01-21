@@ -105,5 +105,13 @@ namespace WalletWise.Controllers
             await _expenseService.DeleteExpense(id);
             return RedirectToAction(nameof(ExpensesController.Index),"Home");
         }
+
+        [HttpGet(nameof(Details))]
+        public async Task<IActionResult> Details(int id)
+        {
+            ExpenseViewModel viewModel= await _expenseService.SelectExpenseByIdAsync(id);
+
+            return Json(viewModel);
+        }
     }
 }

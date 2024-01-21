@@ -12,6 +12,7 @@ namespace WalletWise.Models.Services.Application
         Task AddExpenseAsync(ExpenseInputModel inputModel);
         Task<ExpenseEditModel> GetExpenseForEdit(int id);
         Task <List<ExpenseViewModel>> GetExpensesAsync(string userId);
+        Task<ExpenseViewModel> SelectExpenseByIdAsync(int id);
         Task<ExpenseEditModel> EditExpensesAsync(ExpenseEditModel expenseToEdit);
         Task<bool> ExistExpenseById(int id);
         Task DeleteExpense(int expenId);
