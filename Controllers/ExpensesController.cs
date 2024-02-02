@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using WalletWise.Models.InputModels;
 using WalletWise.Models.Services.Application;
 using WalletWise.Models.ViewModels;
@@ -23,25 +24,28 @@ namespace WalletWise.Controllers
             viewModel.CurrencyList = await _currencyService.GetCurrenciesAsync();
             return View(viewModel);
         }
-        [HttpPost]
+       
+       
+       [HttpPost]
         public async Task<IActionResult> Add(ExpenseListViewModel inputModel)
         {
+            //TO DO: Rendere piu comprensibile questa VALIDATION 
             if (ModelState.IsValid == false)
             {
                 _logger.LogWarning("Add Expense - ModelState not valid");
                 List<string> errorFields= new ();
                 foreach (var item in ModelState)
                 {
-                    if(item.Value.Errors.Count!=1)
-                        continue;
-                    else if(item.Key.Contains(nameof(ExpenseListViewModel.NewExpense))==false)
-                        continue;
-                    else
-                        errorFields.Add(item.Key);
+                    if(item.Key.Contains("NewExpense") &&
+                        item.Value.ValidationState== ModelValidationState.Invalid)
+                    errorFields.Add(item.Key);
                 }
-                string errorFieldMessage= string.Join(" | ",errorFields);
-                TempData["WarningMessage"] = $"Add expense failed - check the fields and try again - {errorFieldMessage}";
-                return RedirectToAction(nameof(Index));
+                if (errorFields.Count >= 1)
+                {
+                    string errorFieldMessage = string.Join(" | ", errorFields);
+                    TempData["WarningMessage"] = $"Add expense failed - check the fields and try again - {errorFieldMessage}";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             await _expenseService.AddExpenseAsync(inputModel.NewExpense);
             return RedirectToAction(nameof(Index));
