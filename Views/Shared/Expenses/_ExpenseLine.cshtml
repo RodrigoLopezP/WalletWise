@@ -1,6 +1,6 @@
 @model ExpenseViewModel
 <tr expense-id="@Model.Id">
-    <td>@Model.Date.ToString("yyyy-MM-dd")</td>
+    <td class="expense-date">@Model.Date.ToString("yyyy-MM-dd")</td>
     <td class="expense-name">@Model.Name</td>
     <td class="expense-amount">@Model.Amount</td>
     <td class="expense-currency">@Model.Currency</td>

@@ -36,7 +36,7 @@
                 <tbody>
                     @foreach (var item in Model.ExpenseList)
                     {
-                        <partial name="Expenses/_ExpenseLine" model="@item"></partial>
+                            <partial name="Expenses/_ExpenseLine" model="@item"></partial>
                     }
                 </tbody>
             </table>
@@ -74,11 +74,12 @@
                         </div>
                         <div class="col-sm-3">
                             <select asp-for="NewExpense.CurrencyId" class="form-control" placeholder="EUR">
-                                    @foreach(var item in Model.CurrencyList){
-                                        <option value="@item.Id">
-                                            @item.Acronym
-                                        </option>
-                                    }
+                                @foreach (var item in Model.CurrencyList)
+                                {
+                                            <option value="@item.Id">
+                                        @item.Acronym
+                                            </option>
+                                }
                             </select>
                         </div>
                         <div class="col-sm-1"></div>
@@ -132,6 +133,10 @@
                 <dt class="col-sm-4"><label asp-for="NewExpense.Amount"></label></dt>
                 <dd  class="col-sm-8" id="ExpenseToDeleteAmount"></dd>
             </dl>
+            <dl class="row">
+                <dt class="col-sm-4"><label asp-for="NewExpense.Date"></label></dt>
+                <dd  class="col-sm-8" id="ExpenseToDeleteDate"></dd>
+            </dl>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -184,117 +189,113 @@
   </div>
 </div>
 
-@section Scripts{
-    <script>
-        $(document).ready(function (){
-            var idExpense;
-            var expenseName;
-            var expenseAmount;
-            var expenseCurrency;
-            
-            //Open expense modal - confirm delete 
-            $('button[data-bs-target="#ModalExpenseDelete"]').click(function () {
-                idExpense = $(this)
+@section Scripts {
+        <script>
+            $(document).ready(function (){
+
+                //Open expense modal - confirm delete 
+                $('button[data-bs-target="#ModalExpenseDelete"]').click(function () {
+                    var idExpense;
+                    var expenseCurrency;
+                    var expenseName;
+                    var expenseAmount;
+                    var expenseDate;
+
+                    idExpense = $(this)
+                                .closest('tr')
+                                .attr('expense-id');
+
+                    $('input[expense-to-delete-id]').val(idExpense);
+
+                    expenseName=$(this)
                     .closest('tr')
-                    .attr('expense-id');
-                $('input[expense-to-delete-id]').val(idExpense);
+                    .find('.expense-name')
+                    .text();
 
-                expenseName=$(this)
-                .closest('tr')
-                .find('.expense-name')
-                .text();
+                    expenseAmount=$(this)
+                    .closest('tr')
+                    .find('.expense-amount')
+                    .text();
 
-                expenseAmount=$(this)
-                .closest('tr')
-                .find('.expense-amount')
-                .text();
+                    expenseCurrency=$(this)
+                    .closest('tr')
+                    .find('.expense-currency')
+                    .text();
 
-                expenseCurrency=$(this)
-                .closest('tr')
-                .find('.expense-currency')
-                .text();
+                    expenseDate=$(this)
+                    .closest('tr')
+                    .find('.expense-date')
+                    .text();
 
-                $('#ExpenseToDeleteName').text(expenseName);
-                $('#ExpenseToDeleteAmount').text(expenseAmount+" "+expenseCurrency);
-            });
-            
-            //Open expense Modal - see all expense information
-            $('button[data-bs-target="#ModalExpenseDetails"]').click(function(){
-                var idExpenseDetails=$(this)
-                                    .closest('tr')
-                                    .attr('expense-id');
-                @* console.log("idExpenseDetails ottenuto"+idExpenseDetails); *@
-                $.ajax({
-                    url:'@Url.Action("Details")',
-                    type:'GET',
-                    data:{
-                        id: idExpenseDetails
-                    },
-                    success: function(response){
-                        console.log("Showing expense details. ID: "+idExpenseDetails);
-                        $('#ExpenseDetails-Id').text(response.id);
-                        $('#ExpenseDetails-Name').text(response.name);
-                        $('#ExpenseDetails-Amount').text(response.amount);
-                        $('#ExpenseDetails-Currency').text(response.currency);
-                        $('#ExpenseDetails-Date').text(response.date.substr(0,10));
-                        $('#ExpenseDetails-Location').text(response.location);
-                        $('#ExpenseDetails-Note').text(response.note);
+                    $('#ExpenseToDeleteName').text(expenseName);
+                    $('#ExpenseToDeleteAmount').text(expenseAmount+" "+expenseCurrency);
+                    $('#ExpenseToDeleteDate').text(expenseDate);
+                });
 
-                        //codice 02 -funziona
-                        var baseUrlEdit= '@Url.Action("Edit")';
-                        var hrefExpenseToEdit= baseUrlEdit+"?Id="+response.id;
-                        $('#Edit-confirm-button').attr('href',hrefExpenseToEdit);
-                    },
-                    error: function(xhr, status, error){
-                        console.log("Errore :"+ error);
-                    }
+                //Open expense Modal - see all expense information
+                $('button[data-bs-target="#ModalExpenseDetails"]').click(function(){
+                    var idExpenseDetails=$(this)
+                                        .closest('tr')
+                                        .attr('expense-id');
+                    console.log("ModalExpenseDetails clicked. ID expense: "+idExpenseDetails);
+
+                    $.ajax({
+                        url:'@Url.Action("Details")',
+                        type:'GET',
+                        data:{
+                            id: idExpenseDetails
+                        },
+                        success: function(response){
+                            console.log("Showing expense details. ID: "+idExpenseDetails);
+                            $('#ExpenseDetails-Id').text(response.id);
+                            $('#ExpenseDetails-Name').text(response.name);
+                            $('#ExpenseDetails-Amount').text(response.amount);
+                            $('#ExpenseDetails-Currency').text(response.currency);
+                            $('#ExpenseDetails-Date').text(response.date.substr(0,10));
+                            $('#ExpenseDetails-Location').text(response.location);
+                            $('#ExpenseDetails-Note').text(response.note);
+
+                            //Create href attribute for btn EDIT in DETAIL MODAL
+                            console.log("Creating href attribute in btn EDIT in DETAIL MODAL. ID expense: "+idExpenseDetails);
+                            var baseUrlEdit= '@Url.Action("Edit")';
+                            var hrefExpenseToEdit= baseUrlEdit+"?Id="+response.id;
+                            $('#Edit-confirm-button').attr('href',hrefExpenseToEdit);
+                        },
+                        error: function(xhr, status, error){
+                            console.log("Errore :"+ error);
+                        }
+                    });
+                });
+
+                //Delete confirmed - send info to controller
+                $('#Delete-confirm-button').click(function () {
+                    
+                    var idExpenseToDel= $("#inputModalExpenseId").val();
+                    console.log("Delete confirmed. ID expense: "+idExpenseToDel);
+
+                    $.ajax({
+                        url:'@Url.Action("Delete")',
+                        type:'DELETE',
+                        data:{
+                            id: idExpenseToDel
+                        },
+                        success: function(response){
+                            console.log("Expense deleted SUCCESSFULLY. Id: "+idExpenseToDel);
+                            $(document).ajaxStop(function(){
+                                window.location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error){
+                            console.log("Errore dettagliato:");
+                            console.log("XHR Object:", xhr);
+                            console.log("Status:", status);
+                            console.log("Error:", error);
+                            $(this).closest('#ModalExpenseDelete').modal('hide');
+                        }
+                    });
+
+
                 });
             });
-
-            //Delete confirmed - send info to controller
-            $('#Delete-confirm-button').click(function () {
-                $.ajax({
-                    url:'@Url.Action("Delete")',
-                    type:'DELETE',
-                    data:{
-                        id: idExpense
-                    },
-                    success: function(response){
-                        console.log("Expense Confirmed Id"+idExpense);
-                        $(document).ajaxStop(function(){
-                            window.location.reload();
-                        });
-                    },
-                    error: function(xhr, status, error){
-                        console.log("Errore dettagliato:");
-                        console.log("XHR Object:", xhr);
-                        console.log("Status:", status);
-                        console.log("Error:", error);
-                        $(this).closest('#ModalExpenseDelete').modal('hide');
-                    }
-
-                });
-            });
-        
-            //Edit confirmed - redirect to edit expense view
-            $('#Edit-confirm-button').click(function(){
-                var expenseToEdit=20;
-                console.log("Ajax - Edit expense view - Id:"+ expenseToEdit);
-
-                $.ajax({
-                    url:'@Url.Action("Edit")',
-                    type:'GET',
-                    data:{
-                        id: expenseToEdit
-                    },
-                    success: function(response){
-                        console.log("Edit expense view - OK");
-                    },
-                    error: function(xhr, status, error){
-                        console.log("Edit expense view - ERROR: "+error+" | STATUS: "+status+" | XHR: "+xhr.responseText +" - "+xhr.status);
-                    }
-                });
-            });
-        });
-    </script>
+        </script>
 }
