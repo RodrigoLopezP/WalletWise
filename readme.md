@@ -15,6 +15,7 @@ A ogni spesa possono essere aggiunti 5 tag per poter categorizzare come una spes
 - **HTML**
 - **CSS** - Bootstrap
 - **Razor**
+- **JQuery**
 
 ## Progettazione database
 E' stato usato un approcio _Database First_ per la creazione del database in MySql. Per successive modifiche, ad esempio la creazione della tabella Currencies e per una eventuale aggiunta delle tabelle Identity, viene fatto tramite Migrations. 
